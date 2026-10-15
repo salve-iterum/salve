@@ -30,7 +30,7 @@ function makeParser(er, walker) {
   const parser = new SaxesParser({ xmlns: true });
 
   const tagStack = [];
-  parser.onopentag = function onopentag(node) {
+  parser.on("opentag", function onopentag(node) {
     er.recordEvent(walker, "enterContext");
 
     const names = Object.keys(node.attributes);
@@ -66,17 +66,17 @@ function makeParser(er, walker) {
     }
     er.recordEvent(walker, "leaveStartTag", []);
     tagStack.unshift([node.uri, node.local]);
-  };
+  });
 
-  parser.ontext = function ontext(text) {
+  parser.on("text", function ontext(text) {
     er.recordEvent(walker, "text", text);
-  };
+  });
 
-  parser.onclosetag = function onclosetag(_node) {
+  parser.on("closetag", function onclosetag(_node) {
     const tagInfo = tagStack.shift();
     er.recordEvent(walker, "endTag", tagInfo[0], tagInfo[1]);
     er.recordEvent(walker, "leaveContext");
-  };
+  });
 
   //
   // parser.onend

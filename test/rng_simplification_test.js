@@ -2,7 +2,10 @@
 
 "use strict";
 
-const fileURL = require("file-url");
+// file-url is ESM-only since v4, so require() yields a namespace object, not a
+// function. Node has this built in anyway.
+const { pathToFileURL } = require("url");
+const fileURL = (p) => pathToFileURL(p).href;
 const path = require("path");
 const { spawn } = require("child_process");
 const fs = require("fs");

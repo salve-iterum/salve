@@ -216,12 +216,17 @@ export class Name extends Base {
     return false; // This is not a wildcard.
   }
 
-  toObject(): { ns: string; name: string; documentation: string | undefined } {
-    return {
+  toObject(): { ns: string; name: string; documentation?: string } {
+    const ret: { ns: string; name: string; documentation?: string } = {
       ns: this.ns,
       name: this.name,
-      documentation: this.documentation,
     };
+    // Omit the key entirely when there is no documentation, as asString() does.
+    if (this.documentation !== undefined) {
+      ret.documentation = this.documentation;
+    }
+
+    return ret;
   }
 
   asString(): string {

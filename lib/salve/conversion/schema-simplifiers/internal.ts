@@ -692,7 +692,13 @@ export class InternalSimplifier<RL extends ResourceLoader>
     if (this.options.simplifyTo >= 1) {
       this.stepStart(1);
       tree = await this.parse(schemaPath, schemaResource, schemaText);
-      tree = await simplifier.step1(schemaPath, tree, this.parse.bind(this));
+      // step1 resolves externalRef and include, so it needs a parser that
+      // loads the resource itself.
+      tree = await simplifier.step1(schemaPath, tree, async (filePath: URL) => {
+        const resource = await this.options.resourceLoader.load(filePath);
+
+        return this.parse(filePath, resource, await resource.getText());
+      });
     }
 
     if (this.options.simplifyTo >= 4) {

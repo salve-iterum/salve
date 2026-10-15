@@ -118,12 +118,12 @@ parser.add_argument("--validator", {
 
 parser.add_argument("--no-optimize-ids", {
   help: "Do NOT optimize the identifiers used by references and definitions.",
-  action: "storeTrue",
+  action: "store_true",
 });
 
 parser.add_argument("--include-paths", {
   help: "Include RNG node path information in the JavaScript file.",
-  action: "storeTrue",
+  action: "store_true",
 });
 
 parser.add_argument("--format-version", {
@@ -134,7 +134,7 @@ parser.add_argument("--format-version", {
 
 parser.add_argument("--simplify-only", {
   help: "Stop converting at the simplification stage.",
-  action: "storeTrue",
+  action: "store_true",
 });
 
 parser.add_argument("--simplify-to", {
@@ -147,34 +147,34 @@ Implies ``--simplify-only``.",
 
 parser.add_argument("--no-output", {
   help: "Skip producing any output. This may be useful for debugging.",
-  action: "storeTrue",
+  action: "store_true",
 });
 
 parser.add_argument("--simplified-input", {
   help: "The input is as simplified RNG.",
-  action: "storeTrue",
+  action: "store_true",
 });
 
 parser.add_argument("--keep-temp", {
   help: "Keep the temporary files around. Useful for diagnosis.",
-  action: "storeTrue",
+  action: "store_true",
 });
 
 parser.add_argument("--verbose", {
   help: "Run verbosely.",
-  action: "storeTrue",
+  action: "store_true",
 });
 
 parser.add_argument("--timing", {
   help: "Output timing information. Implies --verbose.",
-  action: "storeTrue",
+  action: "store_true",
 });
 
 parser.add_argument("--verbose-format", {
   help: `Outputs a verbose version of the data, with actual class names \
 instead of numbers. Implies --no-optimize-ids. This format is cannot \
 be read by salve. It is meant for debugging purposes only.`,
-  action: "storeTrue",
+  action: "store_true",
 });
 
 parser.add_argument("--allow-incomplete-types", {
@@ -351,7 +351,7 @@ start().then(() => {
   throw e;
 });
 
-//  LocalWords:  cli MPL uncaughtException externalRef RNG storeTrue args jing
+//  LocalWords:  cli MPL uncaughtException externalRef RNG args jing
 //  LocalWords:  tempDir dev startTime xsl rng stepStart stepNo xsltproc JS
 //  LocalWords:  stringparam originalDir repeatWhen simplifyingStartTime prog
 //  LocalWords:  xmllint convStartTime
