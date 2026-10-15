@@ -966,10 +966,10 @@ const gYearProgram = {
 const gMonthDayProgram = {
   equal: {
     true: [
-      ["for two equal values", "01-01-01:30", "01-01-01:30"],
+      ["for two equal values", "--01-01-01:30", "--01-01-01:30"],
     ],
     false: [
-      ["for two unequal values", "01-02-01:30", "01-02-01:31"],
+      ["for two unequal values", "--01-02-01:30", "--01-02-01:31"],
     ],
   },
   parseParams: [
@@ -984,10 +984,18 @@ const gMonthDayProgram = {
   disallows: {
     NONE: {
       false: [
-        ["'12-31'", "12-31"],
+        ["'--12-31'", "--12-31"],
+        ["'--02-29' (gMonthDay is year-less, so Feb 29 is valid)", "--02-29"],
+        ["'--12-31Z'", "--12-31Z"],
+        ["'--12-31+01:00'", "--12-31+01:00"],
       ],
       true: [
-        ["'02-30'", "02-30", ["not a valid gMonthDay"]],
+        ["'--02-30'", "--02-30", ["not a valid gMonthDay"]],
+        ["'--13-01'", "--13-01", ["not a valid gMonthDay"]],
+        ["'--12-32'", "--12-32", ["not a valid gMonthDay"]],
+        // The lexical representation requires the leading "--".
+        ["'12-31'", "12-31", ["not a valid gMonthDay"]],
+        ["'---12-31'", "---12-31", ["not a valid gMonthDay"]],
       ],
     },
   },
@@ -996,10 +1004,10 @@ const gMonthDayProgram = {
 const gDayProgram = {
   equal: {
     true: [
-      ["for two equal values", "31-01:30", "31-01:30"],
+      ["for two equal values", "---31-01:30", "---31-01:30"],
     ],
     false: [
-      ["for two unequal values", "31-01:30", "02-01:31"],
+      ["for two unequal values", "---31-01:30", "---02-01:31"],
     ],
   },
   parseParams: [
@@ -1014,10 +1022,16 @@ const gDayProgram = {
   disallows: {
     NONE: {
       false: [
-        ["'01'", "01"],
+        ["'---01'", "---01"],
+        ["'---31'", "---31"],
+        ["'---01Z'", "---01Z"],
       ],
       true: [
-        ["'32'", "32", ["not a valid gDay"]],
+        ["'---32'", "---32", ["not a valid gDay"]],
+        ["'---00'", "---00", ["not a valid gDay"]],
+        // The lexical representation requires the leading "---".
+        ["'01'", "01", ["not a valid gDay"]],
+        ["'--01'", "--01", ["not a valid gDay"]],
       ],
     },
   },
@@ -1026,10 +1040,10 @@ const gDayProgram = {
 const gMonthProgram = {
   equal: {
     true: [
-      ["for two equal values", "01-01:30", "01-01:30"],
+      ["for two equal values", "--01-01:30", "--01-01:30"],
     ],
     false: [
-      ["for two unequal values", "01-01:30", "01-01:31"],
+      ["for two unequal values", "--01-01:30", "--01-01:31"],
     ],
   },
   parseParams: [
@@ -1044,10 +1058,17 @@ const gMonthProgram = {
   disallows: {
     NONE: {
       false: [
-        ["'12'", "12"],
+        ["'--12'", "--12"],
+        ["'--01'", "--01"],
+        ["'--12Z'", "--12Z"],
       ],
       true: [
-        ["'13'", "13", ["not a valid gMonth"]],
+        ["'--13'", "--13", ["not a valid gMonth"]],
+        ["'--00'", "--00", ["not a valid gMonth"]],
+        // The lexical representation requires the leading "--".
+        ["'12'", "12", ["not a valid gMonth"]],
+        // The XML Schema 1.0 first-edition form, dropped in the second edition.
+        ["'--12--'", "--12--", ["not a valid gMonth"]],
       ],
     },
   },
