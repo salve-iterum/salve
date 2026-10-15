@@ -9,7 +9,8 @@ const gulp = require("gulp");
 const log = require("fancy-log");
 const gulpNewer = require("gulp-newer");
 const Promise = require("bluebird");
-const del = require("del");
+// del is ESM-only since v6, so require() yields a namespace object.
+const { deleteAsync: del } = require("del");
 const touch = require("touch");
 const { ArgumentParser } = require("argparse");
 const eslint = require("gulp-eslint");

@@ -1,7 +1,7 @@
 {
   "name": "salve-annos",
   "description": "A fork with support for documentation of Salve, a Javascript library which implements a validator able to validate an XML document on the basis of a subset of RelaxNG.",
-  "version": "1.2.4",
+  "version": "1.2.5",
   "versionedSources": "lib/salve/validate.ts",
   "keywords": [
     "RelaxNG",
@@ -10,7 +10,7 @@
     "XML",
     "validation"
   ],
-  "homepage": "https://github.com/raffazizzi/salve",
+  "homepage": "https://github.com/salve-iterum/salve",
   "author": "Louis-Dominique Dubeau <louisd@mangalamresearch.org>",
   "maintainers": [
     "Raff Viglianti <raffaeleviglianti@gmail.com>"
@@ -25,22 +25,22 @@
   "types": "lib/salve/validate.d.ts",
   "repository": {
     "type": "git",
-    "url": "https://github.com/raffazizzi/salve.git"
+    "url": "https://github.com/salve-iterum/salve.git"
   },
-  "bugs": "https://github.com/raffazizzi/salve/issues",
+  "bugs": "https://github.com/salve-iterum/salve/issues",
   "license": "MPL-2.0",
   "engines": {
     "node": ">=8",
     "npm": ">=6.14.8"
   },
   "dependencies": {
-    "@types/xregexp": "4.3.0",
     "argparse": "^2.0.1",
     "file-url": "^4.0.0",
     "node-fetch": "^3.3.2",
     "require-dir": "^1.2.0",
     "saxes": "^6.0.0",
-    "temp": "^0.9.1"
+    "temp": "^0.9.1",
+    "xregexp": "4.3.0"
   },
   "devDependencies": {
     "@commitlint/cli": "^19.8.0",
@@ -53,6 +53,7 @@
     "@types/node-fetch": "^2.5.7",
     "@types/require-dir": "^1.0.1",
     "@types/temp": "^0.9.4",
+    "@types/xregexp": "4.3.0",
     "bluebird": "^3.7.2",
     "chai": "^5.2.0",
     "child-process-promise": "^2.2.1",
@@ -86,8 +87,7 @@
     "typescript": "^5.8.2",
     "versync": "^5.0.0",
     "webpack": "^5.98.0",
-    "webpack-cli": "^6.0.1",
-    "xregexp": "4.3.0"
+    "webpack-cli": "^6.0.1"
   },
   "bin": {
     "salve-convert": "./bin/salve-convert"
