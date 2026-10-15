@@ -1403,7 +1403,7 @@ class gMonthDay extends CommonStringBased {
   readonly name: string = "gMonthDay";
   readonly typeErrorMsg: string = "not a valid gMonthDay";
   readonly regexp: RegExp = new RegExp(
-    `^\\s*${monthPattern}-${domPattern}${tzPattern}?\\s*$`);
+    `^\\s*--${monthPattern}-${domPattern}${tzPattern}?\\s*$`);
   readonly needsContext: boolean = false;
   readonly validParams: Parameter[] = [patternP];
   disallows(value: string, params: ParsedParams): ValueError[] | false {
@@ -1412,11 +1412,14 @@ class gMonthDay extends CommonStringBased {
       return ret;
     }
 
+    // Drop the "--" that the lexical representation requires; what is left is
+    // what Date() can be coaxed into parsing.
+    const bare = value.trim().slice(2);
     // We have to add a year and a time for Date() to parse it.
-    const match = value.match(tzRe);
+    const match = bare.match(tzRe);
     const withTime = match !== null ?
-      `${value.slice(0, match.index)}T00:00:00${match[0]}` :
-      `${value}T00:00:00`;
+      `${bare.slice(0, match.index)}T00:00:00${match[0]}` :
+      `${bare}T00:00:00`;
     // We always add 2000, which is a leap year, so 01-29 won't raise an
     // error.
     if (!checkDate(`2000-${withTime}`)) {
@@ -1430,7 +1433,8 @@ class gMonthDay extends CommonStringBased {
 class gDay extends CommonStringBased {
   readonly name: string = "gDay";
   readonly typeErrorMsg: string = "not a valid gDay";
-  readonly regexp: RegExp = new RegExp(`^\\s*${domPattern}${tzPattern}?\\s*$`);
+  readonly regexp: RegExp =
+    new RegExp(`^\\s*---${domPattern}${tzPattern}?\\s*$`);
   readonly needsContext: boolean = false;
   readonly validParams: Parameter[] = [patternP];
   disallows(value: string, params: ParsedParams): ValueError[] | false {
@@ -1439,11 +1443,14 @@ class gDay extends CommonStringBased {
       return ret;
     }
 
+    // Drop the "---" that the lexical representation requires; what is left is
+    // what Date() can be coaxed into parsing.
+    const bare = value.trim().slice(3);
     // We have to add a year and a time for Date() to parse it.
-    const match = value.match(tzRe);
+    const match = bare.match(tzRe);
     const withTime = match !== null ?
-      `${value.slice(0, match.index)}T00:00:00${match[0]}` :
-      `${value}T00:00:00`;
+      `${bare.slice(0, match.index)}T00:00:00${match[0]}` :
+      `${bare}T00:00:00`;
     // We always add 2000, which is a leap year, so 01-29 won't raise an
     // error.
     if (!checkDate(`2000-01-${withTime}`)) {
@@ -1458,7 +1465,7 @@ class gMonth extends CommonStringBased {
   readonly name: string = "gMonth";
   readonly typeErrorMsg: string = "not a valid gMonth";
   readonly regexp: RegExp =
-    new RegExp(`^\\s*${monthPattern}${tzPattern}?\\s*$`);
+    new RegExp(`^\\s*--${monthPattern}${tzPattern}?\\s*$`);
   readonly needsContext: boolean = false;
   readonly validParams: Parameter[] = [patternP];
   disallows(value: string, params: ParsedParams): ValueError[] | false {
@@ -1467,11 +1474,14 @@ class gMonth extends CommonStringBased {
       return ret;
     }
 
+    // Drop the "--" that the lexical representation requires; what is left is
+    // what Date() can be coaxed into parsing.
+    const bare = value.trim().slice(2);
     // We have to add a year and a time for Date() to parse it.
-    const match = value.match(tzRe);
+    const match = bare.match(tzRe);
     const withTime = match !== null ?
-      `${value.slice(0, match.index)}-01T00:00:00${match[0]}` :
-      `${value}-01T00:00:00`;
+      `${bare.slice(0, match.index)}-01T00:00:00${match[0]}` :
+      `${bare}-01T00:00:00`;
     // We always add 2000, which is a leap year, so 01-29 won't raise an
     // error.
     if (!checkDate(`2000-${withTime}`)) {
